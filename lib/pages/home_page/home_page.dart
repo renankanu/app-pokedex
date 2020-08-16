@@ -72,8 +72,10 @@ class _HomePageState extends State<HomePage> {
                                               child: ScaleAnimation(
                                                 child: GestureDetector(
                                                   child: PokemonItem(
+                                                    types: pokemon.type,
                                                     index: index,
                                                     name: pokemon.name,
+                                                    number: pokemon.num,
                                                     image: apiStore.getImage(
                                                         number: pokemon.num),
                                                   ),

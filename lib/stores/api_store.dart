@@ -31,12 +31,14 @@ abstract class _ApiStoreBase with Store {
   @action
   Widget getImage({String number}) {
     return CachedNetworkImage(
+      width: 80,
+      height: 80,
       placeholder: (context, url) => new Container(
         color: Colors.transparent,
       ),
       imageUrl:  'https://raw.githubusercontent.com/fanzeyi/pokemon.json/master/images/$number.png',
     );
-  }  
+  }
 
   Future<PokeAPI> loadPokeAPI() async {
     try {
