@@ -27,8 +27,8 @@ class AppBarHome extends StatelessWidget {
                 child: Text(
                   'Pokédex',
                   style: TextStyle(
-                      fontFamily: 'Google',
-                      fontWeight: FontWeight.bold,
+                      fontFamily: 'Raleway',
+                      fontWeight: FontWeight.w700,
                       fontSize: 28),
                 ),
               ),

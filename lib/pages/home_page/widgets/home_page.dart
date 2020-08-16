@@ -12,8 +12,8 @@ class HomePage extends StatelessWidget {
         overflow: Overflow.visible,
         children: <Widget>[
           Positioned(
-            top: -(240 / 2.9),
-            left: screenWidth - (240 / 1.6),
+            top: -(240 / 4.6),
+            left: screenWidth - (240 / 1.66),
             child: Opacity(
                 opacity: 0.1,
                 child: Image.asset(
