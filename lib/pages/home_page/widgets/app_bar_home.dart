@@ -8,7 +8,7 @@ class AppBarHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 120,
+      height: 100,
       child: Column(
         children: <Widget>[
           Container(

@@ -16,20 +16,17 @@ class PokemonItem extends StatelessWidget {
         Column(
           children: <Widget>[
             Container(
-              padding: EdgeInsets.all(0),
+              padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
+                  borderRadius: BorderRadius.circular(38),
                   color: Color.fromARGB(80, 255, 255, 255)),
-              child: Padding(
-                padding: const EdgeInsets.all(6.0),
-                child: Text(
-                  type.trim(),
-                  style: TextStyle(
-                      fontFamily: 'Google',
-                      fontSize: 12,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white),
-                ),
+              child: Text(
+                type.trim(),
+                style: TextStyle(
+                    fontFamily: 'Google',
+                    fontSize: 12,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white),
               ),
             ),
             SizedBox(
