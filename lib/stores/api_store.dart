@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:app_pokedex/consts/const_api.dart';
 import 'package:app_pokedex/models/pokeapi.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
 import 'package:http/http.dart' as http;
 part 'api_store.g.dart';
@@ -17,9 +19,24 @@ abstract class _ApiStoreBase with Store {
 
   @action
   fetchPokemonList() {
-    _pokeAPI= null;
+    _pokeAPI = null;
     loadPokeAPI().then((pokeList) => {_pokeAPI = pokeList});
   }
+
+  @action
+  getPokemon({int index}) {
+    return _pokeAPI.pokemon[index];
+  }
+
+  @action
+  Widget getImage({String number}) {
+    return CachedNetworkImage(
+      placeholder: (context, url) => new Container(
+        color: Colors.transparent,
+      ),
+      imageUrl:  'https://raw.githubusercontent.com/fanzeyi/pokemon.json/master/images/$number.png',
+    );
+  }  
 
   Future<PokeAPI> loadPokeAPI() async {
     try {
