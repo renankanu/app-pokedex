@@ -5,11 +5,21 @@ import 'package:app_pokedex/stores/api_store.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  ApiStore apiStore;
+  @override
+  void initState() {
+    super.initState();
+    apiStore = ApiStore();
+    apiStore.fetchPokemonList();
+  }
   @override
   Widget build(BuildContext context) {
-    ApiStore apiStore = ApiStore();
-    apiStore.fetchPokemonList();
     double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: Colors.white,
