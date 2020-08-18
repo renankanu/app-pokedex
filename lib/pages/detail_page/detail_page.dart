@@ -22,31 +22,29 @@ class Detail extends StatelessWidget {
         children: <Widget>[
           Positioned(top: 10, right: 60, child: Image.asset(ConstsApp.dots)),
           Positioned(top: -10, left: -10, child: RetangleDetail()),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Container(
-              padding: EdgeInsets.only(top: _statusBarHeight),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  IconButton(
-                    icon: Icon(
-                      Icons.arrow_back,
-                      color: Colors.white,
-                    ),
-                    onPressed: () {},
+          Container(
+            padding: EdgeInsets.only(top: _statusBarHeight),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                IconButton(
+                  icon: Icon(
+                    Icons.arrow_back,
+                    color: Colors.white,
                   ),
-                  IconButton(
-                    icon: Icon(
-                      Icons.favorite_border,
-                      color: Colors.white,
-                    ),
-                    onPressed: () {},
+                  onPressed: () {},
+                ),
+                IconButton(
+                  icon: Icon(
+                    Icons.favorite_border,
+                    color: Colors.white,
                   ),
-                ],
-              ),
+                  onPressed: () {},
+                ),
+              ],
             ),
-          )
+          ),
+          Padding(padding: const EdgeInsets.only(top: 104),child: Container(width: 200,height: 200,))
         ],
       ),
     );
