@@ -59,7 +59,7 @@ class HomePage extends StatelessWidget {
                                               position: index,
                                               duration: const Duration(
                                                   milliseconds: 375),
-                                              columnCount: 2,
+                                              columnCount: 3,
                                               child: ScaleAnimation(
                                                 child: GestureDetector(
                                                   child: PokemonItem(
