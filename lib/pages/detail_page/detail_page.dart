@@ -15,31 +15,38 @@ class Detail extends StatelessWidget {
     final _apiStore = Provider.of<ApiStore>(context);
     Pokemon _pokemon = _apiStore.getPokemon(index: index);
     Color _pokemonColor = ConstsApp.getColorType(type: _pokemon.type[0]);
+    final double _statusBarHeight = MediaQuery.of(context).padding.top;
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          _pokemon.name,
-          style: TextStyle(
-              fontFamily: 'Raleway', fontWeight: FontWeight.bold, fontSize: 21),
-        ),
-        elevation: 0,
-        backgroundColor: _pokemonColor,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios),
-          onPressed: () {},
-        ),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.favorite_border),
-            onPressed: () {},
-          )
-        ],
-      ),
       backgroundColor: _pokemonColor,
       body: Stack(
         children: <Widget>[
-          Image.asset(ConstsApp.dots),
-          RetangleDetail()
+          Positioned(top: 10, right: 60, child: Image.asset(ConstsApp.dots)),
+          Positioned(top: -10, left: -10, child: RetangleDetail()),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              padding: EdgeInsets.only(top: _statusBarHeight),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  IconButton(
+                    icon: Icon(
+                      Icons.arrow_back,
+                      color: Colors.white,
+                    ),
+                    onPressed: () {},
+                  ),
+                  IconButton(
+                    icon: Icon(
+                      Icons.favorite_border,
+                      color: Colors.white,
+                    ),
+                    onPressed: () {},
+                  ),
+                ],
+              ),
+            ),
+          )
         ],
       ),
     );
