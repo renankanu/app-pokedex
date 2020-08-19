@@ -6,6 +6,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
+import 'package:simple_animations/simple_animations.dart';
 import 'package:sliding_sheet/sliding_sheet.dart';
 
 class Detail extends StatefulWidget {
@@ -17,19 +18,20 @@ class Detail extends StatefulWidget {
   _DetailState createState() => _DetailState();
 }
 
+enum _CheckboxProps { paddingLeft, color, text, rotation }
+
 class _DetailState extends State<Detail> {
   PageController _pageController;
-  Pokemon _pokemon;
   ApiStore _apiStore;
+  MultiTween _animation;
 
   @override
   void initState() {
     super.initState();
     _pageController = PageController(initialPage: widget.index);
-      _apiStore = GetIt.instance<ApiStore>();
-    _pokemon = _apiStore.pokemonActual;
+    _apiStore = GetIt.instance<ApiStore>();
   }
-  
+
   @override
   Widget build(BuildContext context) {
     final double _statusBarHeight = MediaQuery.of(context).padding.top;
@@ -91,7 +93,7 @@ class _DetailState extends State<Detail> {
               )),
           SlidingSheet(
               elevation: 0,
-              cornerRadius: 16,
+              cornerRadius: 30,
               snapSpec: SnapSpec(
                 snap: true,
                 snappings: [0.7, 1.0],
@@ -107,23 +109,39 @@ class _DetailState extends State<Detail> {
             left: 0,
             right: 0,
             child: Container(
-              height: 150,
+              height: 200,
               child: PageView.builder(
-                controller: _pageController,
+                  controller: _pageController,
                   onPageChanged: (index) {
                     _apiStore.setSelectedPokemon(index: index);
                   },
                   itemCount: _apiStore.pokeAPI.pokemon.length,
                   itemBuilder: (BuildContext context, int index) {
                     Pokemon _pokeItem = _apiStore.getPokemon(index: index);
-                    return CachedNetworkImage(
-                      width: 80,
-                      height: 80,
-                      placeholder: (context, url) => new Container(
-                        color: Colors.transparent,
-                      ),
-                      imageUrl:
-                          'https://raw.githubusercontent.com/fanzeyi/pokemon.json/master/images/${_pokeItem.num}.png',
+                    return Stack(
+                      alignment: Alignment.center,
+                      children: <Widget>[
+                        Hero(
+                          tag: index.toString(),
+                          child: Opacity(
+                            child: Image.asset(
+                              ConstsApp.whitePokeball,
+                              width: 280,
+                              height: 280,
+                            ),
+                            opacity: 0.2,
+                          ),
+                        ),
+                        CachedNetworkImage(
+                          width: 160,
+                          height: 160,
+                          placeholder: (context, url) => new Container(
+                            color: Colors.transparent,
+                          ),
+                          imageUrl:
+                              'https://raw.githubusercontent.com/fanzeyi/pokemon.json/master/images/${_pokeItem.num}.png',
+                        ),
+                      ],
                     );
                   }),
             ),

@@ -38,9 +38,9 @@ abstract class _ApiStoreBase with Store {
   }
 
   @action
-  setSelectedPokemon({int index }) {
-   _pokemonActual = _pokeAPI.pokemon[index];
-   pokemonColor = ConstsApp.getColorType(type: _pokemonActual.type[0]);
+  setSelectedPokemon({int index}) {
+    _pokemonActual = _pokeAPI.pokemon[index];
+    pokemonColor = ConstsApp.getColorType(type: _pokemonActual.type[0]);
   }
 
   @action
@@ -51,7 +51,8 @@ abstract class _ApiStoreBase with Store {
       placeholder: (context, url) => new Container(
         color: Colors.transparent,
       ),
-      imageUrl:  'https://raw.githubusercontent.com/fanzeyi/pokemon.json/master/images/$number.png',
+      imageUrl:
+          'https://raw.githubusercontent.com/fanzeyi/pokemon.json/master/images/$number.png',
     );
   }
 
