@@ -18,7 +18,7 @@ class Detail extends StatefulWidget {
   _DetailState createState() => _DetailState();
 }
 
-enum _CheckboxProps { paddingLeft, color, text, rotation }
+enum _CheckboxProps { begin, end, duration, rotation }
 
 class _DetailState extends State<Detail> {
   PageController _pageController;
@@ -30,6 +30,9 @@ class _DetailState extends State<Detail> {
     super.initState();
     _pageController = PageController(initialPage: widget.index);
     _apiStore = GetIt.instance<ApiStore>();
+    _animation = MultiTween<_CheckboxProps>()
+      ..add(_CheckboxProps.rotation, Tween(begin: 0.0, end: 6.0),
+          Duration(seconds: 1), Curves.linear);
   }
 
   @override
@@ -121,17 +124,25 @@ class _DetailState extends State<Detail> {
                     return Stack(
                       alignment: Alignment.center,
                       children: <Widget>[
-                        Hero(
-                          tag: index.toString(),
-                          child: Opacity(
-                            child: Image.asset(
-                              ConstsApp.whitePokeball,
-                              width: 280,
-                              height: 280,
-                            ),
-                            opacity: 0.2,
-                          ),
-                        ),
+                        LoopAnimation(
+                            tween: _animation,
+                            duration: Duration(seconds: 10),
+                            builder: (context, child, value) {
+                              return Transform.rotate(
+                                angle: value.get(_CheckboxProps.rotation),
+                                child: Hero(
+                                  tag: index.toString(),
+                                  child: Opacity(
+                                    child: Image.asset(
+                                      ConstsApp.whitePokeball,
+                                      width: 280,
+                                      height: 280,
+                                    ),
+                                    opacity: 0.2,
+                                  ),
+                                ),
+                              );
+                            }),
                         CachedNetworkImage(
                           width: 160,
                           height: 160,
