@@ -62,19 +62,17 @@ class PokemonItem extends StatelessWidget {
             Positioned(
               bottom: -12,
               right: -12,
-              child: Hero(
-                tag: index.toString(),
-                child: Opacity(
-                  child: Image.asset(
-                    ConstsApp.whitePokeball,
-                    width: 100,
-                    height: 100,
-                  ),
-                  opacity: 0.2,
+              child: Opacity(
+                child: Image.asset(
+                  ConstsApp.whitePokeball,
+                  width: 100,
+                  height: 100,
                 ),
+                opacity: 0.2,
               ),
             ),
-            Positioned(right: 4, bottom: 8, child: image),
+            Positioned(
+                right: 4, bottom: 8, child: Hero(tag: name, child: image)),
             Positioned(
               top: 10,
               right: 4,
