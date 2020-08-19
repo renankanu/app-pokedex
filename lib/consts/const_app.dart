@@ -6,7 +6,7 @@ class ConstsApp {
   static const blackPokeball = 'assets/images/pokeball_dark.png';
   static const dots = 'assets/images/dotted.png';
 
-  static Color getColorType({String type}) {
+  static  getColorType({String type}) {
     switch (type) {
       case 'Normal':
         return Colors.brown[400];
