@@ -143,15 +143,24 @@ class _DetailState extends State<Detail> {
                                 ),
                               );
                             }),
-                        CachedNetworkImage(
-                          width: 160,
-                          height: 160,
-                          placeholder: (context, url) => new Container(
-                            color: Colors.transparent,
-                          ),
-                          imageUrl:
-                              'https://raw.githubusercontent.com/fanzeyi/pokemon.json/master/images/${_pokeItem.num}.png',
-                        ),
+                        Observer(builder: (context) {
+                          return AnimatedPadding(
+                            duration: Duration(milliseconds: 500),
+                            curve: Curves.bounceInOut,
+                            padding: EdgeInsets.all(
+                                index == _apiStore.actualPosition ? 0 : 60),
+                            child: CachedNetworkImage(
+                              width: 160,
+                              height: 160,
+                              color: index == _apiStore.actualPosition ? null : Colors.black.withOpacity(0.2),
+                              placeholder: (context, url) => new Container(
+                                color: Colors.transparent,
+                              ),
+                              imageUrl:
+                                  'https://raw.githubusercontent.com/fanzeyi/pokemon.json/master/images/${_pokeItem.num}.png',
+                            ),
+                          );
+                        })
                       ],
                     );
                   }),

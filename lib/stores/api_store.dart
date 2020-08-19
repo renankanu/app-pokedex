@@ -21,6 +21,9 @@ abstract class _ApiStoreBase with Store {
   @observable
   dynamic pokemonColor;
 
+  @observable
+  int actualPosition;
+
   @computed
   PokeAPI get pokeAPI => _pokeAPI;
 
@@ -41,6 +44,7 @@ abstract class _ApiStoreBase with Store {
   setSelectedPokemon({int index}) {
     _pokemonActual = _pokeAPI.pokemon[index];
     pokemonColor = ConstsApp.getColorType(type: _pokemonActual.type[0]);
+    actualPosition = index;
   }
 
   @action
