@@ -7,13 +7,27 @@ import 'package:app_pokedex/stores/api_store.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
-import 'package:provider/provider.dart';
+import 'package:get_it/get_it.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  ApiStore _apiStore;
+
+  @override
+  void initState() {
+    super.initState();
+    _apiStore = GetIt.instance<ApiStore>();
+    if (_apiStore.pokeAPI == null) {
+      _apiStore.fetchPokemonList();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    final _apiStore = Provider.of<ApiStore>(context);
-    _apiStore.fetchPokemonList();
     double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: Colors.white,
@@ -40,8 +54,7 @@ class HomePage extends StatelessWidget {
                     child: Observer(
                       name: 'ListHomePage',
                       builder: (BuildContext context) {
-                        PokeAPI _pokeAPI = _apiStore.pokeAPI;
-                        return (_pokeAPI != null)
+                        return (_apiStore.pokeAPI != null)
                             ? AnimationLimiter(
                                 child: GridView.builder(
                                     physics: BouncingScrollPhysics(),
@@ -50,7 +63,7 @@ class HomePage extends StatelessWidget {
                                     gridDelegate:
                                         new SliverGridDelegateWithFixedCrossAxisCount(
                                             crossAxisCount: 2),
-                                    itemCount: _pokeAPI.pokemon.length,
+                                    itemCount: _apiStore.pokeAPI.pokemon.length,
                                     itemBuilder: (context, index) {
                                       Pokemon pokemon =
                                           _apiStore.getPokemon(index: index);
@@ -71,7 +84,9 @@ class HomePage extends StatelessWidget {
                                                         number: pokemon.num),
                                                   ),
                                                   onTap: () {
-                                                    _apiStore.setSelectedPokemon(index:  index);
+                                                    _apiStore
+                                                        .setSelectedPokemon(
+                                                            index: index);
                                                     Navigator.push(
                                                         context,
                                                         MaterialPageRoute(

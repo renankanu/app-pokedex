@@ -5,28 +5,40 @@ import 'package:app_pokedex/stores/api_store.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:provider/provider.dart';
+import 'package:get_it/get_it.dart';
 import 'package:sliding_sheet/sliding_sheet.dart';
 
-class Detail extends StatelessWidget {
+class Detail extends StatefulWidget {
   final int index;
 
   const Detail({Key key, this.index}) : super(key: key);
 
   @override
+  _DetailState createState() => _DetailState();
+}
+
+class _DetailState extends State<Detail> {
+  PageController _pageController;
+  Pokemon _pokemon;
+  ApiStore _apiStore;
+
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController(initialPage: widget.index);
+      _apiStore = GetIt.instance<ApiStore>();
+    _pokemon = _apiStore.pokemonActual;
+  }
+  
+  @override
   Widget build(BuildContext context) {
-    final _apiStore = Provider.of<ApiStore>(context);
-    Pokemon _pokemon = _apiStore.pokemonActual;
-    Color _pokemonColor = ConstsApp.getColorType(type: _pokemon.type[0]);
     final double _statusBarHeight = MediaQuery.of(context).padding.top;
     return Scaffold(
       body: Stack(
         children: <Widget>[
           Observer(builder: (context) {
-            _pokemonColor =
-                ConstsApp.getColorType(type: _apiStore.pokemonActual.type[0]);
             return Container(
-              color: _pokemonColor,
+              color: _apiStore.pokemonColor,
             );
           }),
           Positioned(top: 10, right: 60, child: Image.asset(ConstsApp.dots)),
@@ -97,6 +109,7 @@ class Detail extends StatelessWidget {
             child: Container(
               height: 150,
               child: PageView.builder(
+                controller: _pageController,
                   onPageChanged: (index) {
                     _apiStore.setSelectedPokemon(index: index);
                   },

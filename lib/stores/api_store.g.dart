@@ -53,6 +53,21 @@ mixin _$ApiStore on _ApiStoreBase, Store {
     });
   }
 
+  final _$pokemonColorAtom = Atom(name: '_ApiStoreBase.pokemonColor');
+
+  @override
+  dynamic get pokemonColor {
+    _$pokemonColorAtom.reportRead();
+    return super.pokemonColor;
+  }
+
+  @override
+  set pokemonColor(dynamic value) {
+    _$pokemonColorAtom.reportWrite(value, super.pokemonColor, () {
+      super.pokemonColor = value;
+    });
+  }
+
   final _$_ApiStoreBaseActionController =
       ActionController(name: '_ApiStoreBase');
 
@@ -62,17 +77,6 @@ mixin _$ApiStore on _ApiStoreBase, Store {
         name: '_ApiStoreBase.fetchPokemonList');
     try {
       return super.fetchPokemonList();
-    } finally {
-      _$_ApiStoreBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  dynamic getPokemon({int index}) {
-    final _$actionInfo = _$_ApiStoreBaseActionController.startAction(
-        name: '_ApiStoreBase.getPokemon');
-    try {
-      return super.getPokemon(index: index);
     } finally {
       _$_ApiStoreBaseActionController.endAction(_$actionInfo);
     }
@@ -103,6 +107,7 @@ mixin _$ApiStore on _ApiStoreBase, Store {
   @override
   String toString() {
     return '''
+pokemonColor: ${pokemonColor},
 pokeAPI: ${pokeAPI},
 pokemonActual: ${pokemonActual}
     ''';
