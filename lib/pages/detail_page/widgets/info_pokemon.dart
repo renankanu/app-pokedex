@@ -41,12 +41,10 @@ class _InfoPokemonState extends State<InfoPokemon>
             elevation: 0,
             bottom: TabBar(
               onTap: (index) {
-                setState(() {
-                  _currentIndex = index;
-                  _pageController.animateToPage(index,
-                      duration: Duration(microseconds: 300),
-                      curve: Curves.easeInOut);
-                });
+                _currentIndex = index;
+                _pageController.animateToPage(index,
+                    duration: Duration(microseconds: 300),
+                    curve: Curves.easeInOut);
               },
               controller: _tabController,
               labelStyle: TextStyle(fontWeight: FontWeight.w700),
@@ -75,11 +73,8 @@ class _InfoPokemonState extends State<InfoPokemon>
       ),
       body: PageView(
         onPageChanged: (index) {
-          setState(() {
-            _currentIndex = index;
-            _tabController.animateTo(index,
-                duration: Duration(microseconds: 300));
-          });
+          _tabController.animateTo(index,
+              duration: Duration(microseconds: 300));
         },
         controller: _pageController,
         children: <Widget>[
