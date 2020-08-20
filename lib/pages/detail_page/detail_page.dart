@@ -1,5 +1,6 @@
 import 'package:app_pokedex/consts/const_app.dart';
 import 'package:app_pokedex/models/pokeapi.dart';
+import 'package:app_pokedex/pages/detail_page/widgets/info_pokemon.dart';
 import 'package:app_pokedex/pages/detail_page/widgets/retangle_detail.dart';
 import 'package:app_pokedex/stores/api_store.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -32,10 +33,11 @@ class _DetailState extends State<Detail> {
   @override
   void initState() {
     super.initState();
-    _pageController = PageController(initialPage: widget.index);
+    _pageController =
+        PageController(initialPage: widget.index, viewportFraction: 0.6);
     _apiStore = GetIt.instance<ApiStore>();
     _animation = MultiTween<_CheckboxProps>()
-      ..add(_CheckboxProps.rotation, Tween(begin: 0.0, end: 6.0),
+      ..add(_CheckboxProps.rotation, Tween(begin: 0.0, end: 10.0),
           Duration(seconds: 1), Curves.linear);
     _progress = 0;
     _multiple = 1;
@@ -52,6 +54,39 @@ class _DetailState extends State<Detail> {
     return ((progress - lower) / (upper - lower)).clamp(0.0, 1.0);
   }
 
+  Widget getTypes(List<String> types) {
+    List<Widget> list = [];
+    types.forEach((type) {
+      list.add(
+        Row(
+          children: <Widget>[
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(38),
+                  color: Color.fromARGB(80, 255, 255, 255)),
+              child: Text(
+                type.trim(),
+                style: TextStyle(
+                    fontFamily: 'Google',
+                    fontSize: 12,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white),
+              ),
+            ),
+            SizedBox(
+              width: 5,
+            )
+          ],
+        ),
+      );
+    });
+    return Row(
+      children: list,
+      crossAxisAlignment: CrossAxisAlignment.start,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final double _statusBarHeight = MediaQuery.of(context).padding.top;
@@ -59,12 +94,13 @@ class _DetailState extends State<Detail> {
       body: Stack(
         children: <Widget>[
           Observer(builder: (context) {
-            return Container(
+            return AnimatedContainer(
               color: _apiStore.pokemonColor,
+              duration: Duration(milliseconds: 900),
             );
           }),
           Positioned(top: 10, right: 60, child: Image.asset(ConstsApp.dots)),
-          Positioned(top: -10, left: -10, child: RetangleDetail()),
+          Positioned(top: -50, left: -10, child: RetangleDetail()),
           Container(
             padding: EdgeInsets.only(top: _statusBarHeight),
             child: Row(
@@ -81,7 +117,14 @@ class _DetailState extends State<Detail> {
                 ),
                 Opacity(
                     opacity: _opacityTitle,
-                    child: Text(_apiStore.pokemonActual.name)),
+                    child: Text(
+                      _apiStore.pokemonActual.name,
+                      style: TextStyle(
+                          fontFamily: 'Raleway',
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                          fontSize: 22),
+                    )),
                 IconButton(
                   icon: Icon(
                     Icons.favorite_border,
@@ -93,28 +136,45 @@ class _DetailState extends State<Detail> {
             ),
           ),
           Padding(
-              padding: const EdgeInsets.only(top: 104),
+              padding: const EdgeInsets.only(top: 80),
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Container(
-                  child: Column(
-                    children: <Widget>[
-                      Observer(builder: (context) {
-                        return Opacity(
-                          opacity: _opacity,
-                          child: Text(
-                            _apiStore.pokemonActual.name,
-                            style: TextStyle(
-                              fontFamily: 'Raleway',
-                              fontWeight: FontWeight.bold,
-                              fontSize: 36,
-                              color: Colors.white,
-                            ),
+                  child: Observer(builder: (context) {
+                    return Opacity(
+                      opacity: _opacity,
+                      child: Column(
+                        children: <Widget>[
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Text(
+                                _apiStore.pokemonActual.name,
+                                style: TextStyle(
+                                  fontFamily: 'Raleway',
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 36,
+                                  color: Colors.white,
+                                ),
+                              ),
+                              Text(
+                                "#"+_apiStore.pokemonActual.num,
+                                style: TextStyle(
+                                  fontFamily: 'Raleway',
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ],
                           ),
-                        );
-                      })
-                    ],
-                  ),
+                          Container(
+                            child: getTypes(_apiStore.pokemonActual.type),
+                          )
+                        ],
+                      ),
+                    );
+                  }),
                 ),
               )),
           SlidingSheet(
@@ -137,6 +197,7 @@ class _DetailState extends State<Detail> {
               builder: (context, state) {
                 return Container(
                   height: MediaQuery.of(context).size.height,
+                  child: InfoPokemon(),
                 );
               }),
           Positioned(
@@ -170,7 +231,9 @@ class _DetailState extends State<Detail> {
                                       width: 280,
                                       height: 280,
                                     ),
-                                    opacity: 0.2,
+                                    opacity: index == _apiStore.actualPosition
+                                        ? 0.2
+                                        : 0.0,
                                   ),
                                 );
                               }),
