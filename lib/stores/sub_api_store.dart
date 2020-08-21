@@ -10,16 +10,17 @@ part 'sub_api_store.g.dart';
 class SubApiStore = _SubApiStoreBase with _$SubApiStore;
 
 abstract class _SubApiStoreBase with Store {
-    @observable 
+  @observable
   Specie specie;
 
-  @observable 
+  @observable
   PokeInfo pokeApiV2;
 
-  @action 
-  Future<void> getInfoPokemon(String nome) async {
+  @action
+  Future<void> getInfoPokemon(String name) async {
     try {
-      final response = await http.get(ConstAPI.pokeapiv2URL+nome.toLowerCase());
+      final response =
+          await http.get(ConstAPI.pokeapiv2URL + name.toLowerCase());
       var decodeJson = jsonDecode(response.body);
       pokeApiV2 = PokeInfo.fromJson(decodeJson);
     } catch (error, stacktrace) {
@@ -32,7 +33,8 @@ abstract class _SubApiStoreBase with Store {
   Future<void> getInfoSpecie(String numPokemon) async {
     try {
       specie = null;
-      final response = await http.get(ConstAPI.pokeapiv2SpeciesURL+numPokemon);
+      final response =
+          await http.get(ConstAPI.pokeapiv2SpeciesURL + numPokemon);
       var decodeJson = jsonDecode(response.body);
       var _specie = Specie.fromJson(decodeJson);
       specie = _specie;
@@ -42,4 +44,3 @@ abstract class _SubApiStoreBase with Store {
     }
   }
 }
-

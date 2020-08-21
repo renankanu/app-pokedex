@@ -17,14 +17,13 @@ class _InfoPokemonState extends State<InfoPokemon>
   PageController _pageController;
   ApiStore _apiStore;
   SubApiStore _subApiStore;
-  int _currentIndex;
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 3, vsync: this);
     _apiStore = GetIt.instance<ApiStore>();
-    _subApiStore = SubApiStore();
+    _subApiStore = GetIt.instance<SubApiStore>();
     _pageController = PageController(initialPage: 0);
   }
 
@@ -34,14 +33,11 @@ class _InfoPokemonState extends State<InfoPokemon>
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(50),
         child: Observer(builder: (context) {
-          _subApiStore.getInfoPokemon(_apiStore.pokemonActual.name);
-          _subApiStore.getInfoSpecie(_apiStore.pokemonActual.id.toString());
           return AppBar(
             backgroundColor: Colors.white,
             elevation: 0,
             bottom: TabBar(
               onTap: (index) {
-                _currentIndex = index;
                 _pageController.animateToPage(index,
                     duration: Duration(microseconds: 300),
                     curve: Curves.easeInOut);
@@ -80,7 +76,7 @@ class _InfoPokemonState extends State<InfoPokemon>
         children: <Widget>[
           Container(
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 30, vertical: 30),
+              padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
@@ -91,22 +87,33 @@ class _InfoPokemonState extends State<InfoPokemon>
                   SizedBox(
                     height: 10,
                   ),
-                  Observer(builder: (context) {
-                    Specie _specie = _subApiStore.specie;
-                    return _specie != null
-                        ? Text(
-                            _specie.flavorTextEntries
-                                .where((desc) => desc.language.name == 'en')
-                                .first
-                                .flavorText,
-                            style: TextStyle(
-                              fontSize: 14,
-                            ),
-                          )
-                        : Center(
-                            child: CircularProgressIndicator(),
-                          );
-                  }),
+                  Observer(
+                    builder: (context) {
+                      Specie _specie = _subApiStore.specie;
+                      return _specie != null
+                          ? Text(
+                              _specie.flavorTextEntries
+                                  .where((desc) => desc.language.name == 'en')
+                                  .first
+                                  .flavorText
+                                  .replaceAll('\n', ' ')
+                                  .replaceAll('\f', ' '),
+                              style: TextStyle(
+                                fontSize: 14,
+                              ),
+                            )
+                          : Center(
+                              child: SizedBox(
+                                width: 15,
+                                height: 15,
+                                child: CircularProgressIndicator(
+                                  valueColor: AlwaysStoppedAnimation<Color>(
+                                      _apiStore.pokemonColor),
+                                ),
+                              ),
+                            );
+                    },
+                  ),
                 ],
               ),
             ),

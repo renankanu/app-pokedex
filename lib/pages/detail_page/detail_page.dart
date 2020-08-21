@@ -3,6 +3,7 @@ import 'package:app_pokedex/models/pokeapi.dart';
 import 'package:app_pokedex/pages/detail_page/widgets/info_pokemon.dart';
 import 'package:app_pokedex/pages/detail_page/widgets/retangle_detail.dart';
 import 'package:app_pokedex/stores/api_store.dart';
+import 'package:app_pokedex/stores/sub_api_store.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -24,6 +25,7 @@ enum _CheckboxProps { rotation }
 class _DetailState extends State<Detail> {
   PageController _pageController;
   ApiStore _apiStore;
+  SubApiStore _subApiStore;
   MultiTween _animation;
   double _progress;
   double _multiple;
@@ -36,6 +38,9 @@ class _DetailState extends State<Detail> {
     _pageController =
         PageController(initialPage: widget.index, viewportFraction: 0.6);
     _apiStore = GetIt.instance<ApiStore>();
+    _subApiStore = GetIt.instance<SubApiStore>();
+    _subApiStore.getInfoPokemon(_apiStore.pokemonActual.name);
+    _subApiStore.getInfoSpecie(_apiStore.pokemonActual.id.toString());
     _animation = MultiTween<_CheckboxProps>()
       ..add(_CheckboxProps.rotation, Tween(begin: 0.0, end: 10.0),
           Duration(seconds: 1), Curves.linear);
@@ -158,7 +163,7 @@ class _DetailState extends State<Detail> {
                                 ),
                               ),
                               Text(
-                                "#"+_apiStore.pokemonActual.num,
+                                "#" + _apiStore.pokemonActual.num,
                                 style: TextStyle(
                                   fontFamily: 'Raleway',
                                   fontWeight: FontWeight.bold,
@@ -212,6 +217,9 @@ class _DetailState extends State<Detail> {
                     controller: _pageController,
                     onPageChanged: (index) {
                       _apiStore.setSelectedPokemon(index: index);
+                      _subApiStore.getInfoPokemon(_apiStore.pokemonActual.name);
+                      _subApiStore
+                          .getInfoSpecie(_apiStore.pokemonActual.id.toString());
                     },
                     itemCount: _apiStore.pokeAPI.pokemon.length,
                     itemBuilder: (BuildContext context, int index) {

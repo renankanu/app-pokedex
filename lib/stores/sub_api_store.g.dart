@@ -43,8 +43,8 @@ mixin _$SubApiStore on _SubApiStoreBase, Store {
       AsyncAction('_SubApiStoreBase.getInfoPokemon');
 
   @override
-  Future<void> getInfoPokemon(String nome) {
-    return _$getInfoPokemonAsyncAction.run(() => super.getInfoPokemon(nome));
+  Future<void> getInfoPokemon(String name) {
+    return _$getInfoPokemonAsyncAction.run(() => super.getInfoPokemon(name));
   }
 
   final _$getInfoSpecieAsyncAction =
