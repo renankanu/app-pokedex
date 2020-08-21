@@ -24,18 +24,18 @@ mixin _$SubApiStore on _SubApiStoreBase, Store {
     });
   }
 
-  final _$pokeApiV2Atom = Atom(name: '_SubApiStoreBase.pokeApiV2');
+  final _$pokeInfoAtom = Atom(name: '_SubApiStoreBase.pokeInfo');
 
   @override
-  PokeInfo get pokeApiV2 {
-    _$pokeApiV2Atom.reportRead();
-    return super.pokeApiV2;
+  PokeInfo get pokeInfo {
+    _$pokeInfoAtom.reportRead();
+    return super.pokeInfo;
   }
 
   @override
-  set pokeApiV2(PokeInfo value) {
-    _$pokeApiV2Atom.reportWrite(value, super.pokeApiV2, () {
-      super.pokeApiV2 = value;
+  set pokeInfo(PokeInfo value) {
+    _$pokeInfoAtom.reportWrite(value, super.pokeInfo, () {
+      super.pokeInfo = value;
     });
   }
 
@@ -60,7 +60,7 @@ mixin _$SubApiStore on _SubApiStoreBase, Store {
   String toString() {
     return '''
 specie: ${specie},
-pokeApiV2: ${pokeApiV2}
+pokeInfo: ${pokeInfo}
     ''';
   }
 }

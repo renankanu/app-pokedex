@@ -1,3 +1,4 @@
+import 'package:app_pokedex/models/pokeapiinfo.dart';
 import 'package:app_pokedex/models/specie.dart';
 import 'package:app_pokedex/stores/api_store.dart';
 import 'package:app_pokedex/stores/sub_api_store.dart';
@@ -114,6 +115,85 @@ class _InfoPokemonState extends State<InfoPokemon>
                             );
                     },
                   ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    'Biologia',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(right: 200),
+                    child: Observer(builder: (context) {
+                      PokeInfo _pokeInfo = _subApiStore.pokeInfo;
+                      return _pokeInfo != null
+                          ? Column(
+                              children: <Widget>[
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: <Widget>[
+                                    Text(
+                                      'Altura',
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black54,
+                                      ),
+                                    ),
+                                    Text(
+                                      buildString(_pokeInfo.height.toString()),
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 5,
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: <Widget>[
+                                    Text(
+                                      'Peso',
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black54,
+                                      ),
+                                    ),
+                                    Text(
+                                      buildString(_pokeInfo.weight.toString()),
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              ],
+                            )
+                          : Center(
+                              child: SizedBox(
+                                width: 15,
+                                height: 15,
+                                child: CircularProgressIndicator(
+                                  valueColor: AlwaysStoppedAnimation<Color>(
+                                      _apiStore.pokemonColor),
+                                ),
+                              ),
+                            );
+                    }),
+                  )
                 ],
               ),
             ),
@@ -127,5 +207,15 @@ class _InfoPokemonState extends State<InfoPokemon>
         ],
       ),
     );
+  }
+
+  String buildString(String item) {
+    var initialValue = item;
+    if (initialValue.length == 1) {
+      return "0." + initialValue;
+    }
+    var lastChar = initialValue.substring(initialValue.length - 1);
+    var newvalue = initialValue.substring(0, initialValue.length - 1);
+    return newvalue + "." + lastChar;
   }
 }

@@ -68,8 +68,8 @@ class PokeInfo {
     order = json['order'];
     species =
         json['species'] != null ? new Ability.fromJson(json['species']) : null;
-    sprites =
-        json['sprites'] != null ? new Sprites.fromJson(json['sprites']) : null;
+    // sprites =
+    //     json['sprites'] != null ? new Sprites.fromJson(json['sprites']) : null;
     if (json['stats'] != null) {
       stats = new List<Stats>();
       json['stats'].forEach((v) {

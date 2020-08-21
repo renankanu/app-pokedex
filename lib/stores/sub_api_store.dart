@@ -14,15 +14,16 @@ abstract class _SubApiStoreBase with Store {
   Specie specie;
 
   @observable
-  PokeInfo pokeApiV2;
+  PokeInfo pokeInfo;
 
   @action
   Future<void> getInfoPokemon(String name) async {
     try {
+      pokeInfo = null;
       final response =
           await http.get(ConstAPI.pokeapiv2URL + name.toLowerCase());
       var decodeJson = jsonDecode(response.body);
-      pokeApiV2 = PokeInfo.fromJson(decodeJson);
+      pokeInfo = PokeInfo.fromJson(decodeJson);
     } catch (error, stacktrace) {
       print("Erro ao carregar lista" + stacktrace.toString());
       return null;
