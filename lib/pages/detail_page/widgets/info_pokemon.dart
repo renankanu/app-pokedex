@@ -139,16 +139,20 @@ class _InfoPokemonState extends State<InfoPokemon>
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: <Widget>[
-                                    Text(
-                                      'Altura',
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.black54,
+                                    Opacity(
+                                      opacity: 0.4,
+                                      child: Text(
+                                        'Height',
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.black54,
+                                        ),
                                       ),
                                     ),
                                     Text(
-                                      buildString(_pokeInfo.height.toString()),
+                                      buildString(_pokeInfo.height.toString()) +
+                                          " cm",
                                       style: TextStyle(
                                         fontSize: 14,
                                         color: Colors.black,
@@ -163,16 +167,20 @@ class _InfoPokemonState extends State<InfoPokemon>
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: <Widget>[
-                                    Text(
-                                      'Peso',
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.black54,
+                                    Opacity(
+                                      opacity: 0.4,
+                                      child: Text(
+                                        'Weight',
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.black54,
+                                        ),
                                       ),
                                     ),
                                     Text(
-                                      buildString(_pokeInfo.weight.toString()),
+                                      buildString(_pokeInfo.weight.toString()) +
+                                          " kg",
                                       style: TextStyle(
                                         fontSize: 14,
                                         color: Colors.black,

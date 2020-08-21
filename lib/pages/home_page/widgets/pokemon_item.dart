@@ -23,7 +23,6 @@ class PokemonItem extends StatelessWidget {
               child: Text(
                 type.trim(),
                 style: TextStyle(
-                    fontFamily: 'Google',
                     fontSize: 12,
                     fontWeight: FontWeight.bold,
                     color: Colors.white),
@@ -80,7 +79,6 @@ class PokemonItem extends StatelessWidget {
                 child: Text(
                   '#$number',
                   style: TextStyle(
-                    fontFamily: 'Raleway',
                     fontWeight: FontWeight.bold,
                     fontSize: 16,
                     color: Colors.white,
@@ -94,7 +92,6 @@ class PokemonItem extends StatelessWidget {
               child: Text(
                 name,
                 style: TextStyle(
-                  fontFamily: 'Raleway',
                   fontWeight: FontWeight.bold,
                   fontSize: 16,
                   color: Colors.white,

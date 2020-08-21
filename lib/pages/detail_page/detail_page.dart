@@ -73,7 +73,6 @@ class _DetailState extends State<Detail> {
               child: Text(
                 type.trim(),
                 style: TextStyle(
-                    fontFamily: 'Google',
                     fontSize: 12,
                     fontWeight: FontWeight.bold,
                     color: Colors.white),
@@ -125,7 +124,6 @@ class _DetailState extends State<Detail> {
                     child: Text(
                       _apiStore.pokemonActual.name,
                       style: TextStyle(
-                          fontFamily: 'Raleway',
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
                           fontSize: 22),
@@ -156,7 +154,6 @@ class _DetailState extends State<Detail> {
                               Text(
                                 _apiStore.pokemonActual.name,
                                 style: TextStyle(
-                                  fontFamily: 'Raleway',
                                   fontWeight: FontWeight.bold,
                                   fontSize: 36,
                                   color: Colors.white,
@@ -165,7 +162,6 @@ class _DetailState extends State<Detail> {
                               Text(
                                 "#" + _apiStore.pokemonActual.num,
                                 style: TextStyle(
-                                  fontFamily: 'Raleway',
                                   fontWeight: FontWeight.bold,
                                   fontSize: 18,
                                   color: Colors.white,
