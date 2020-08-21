@@ -116,92 +116,94 @@ class _InfoPokemonState extends State<InfoPokemon>
                     },
                   ),
                   SizedBox(
-                    height: 10,
+                    height: 28,
                   ),
-                  Text(
-                    'Biologia',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(right: 200),
-                    child: Observer(builder: (context) {
-                      PokeInfo _pokeInfo = _subApiStore.pokeInfo;
-                      return _pokeInfo != null
-                          ? Column(
+                  Observer(builder: (context) {
+                    PokeInfo _pokeInfo = _subApiStore.pokeInfo;
+                    return Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12),
+                          color: Colors.white,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.12),
+                              spreadRadius: 1,
+                              blurRadius: 10,
+                              offset: Offset(5, 10),
+                            ),
+                          ]),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 20.0, vertical: 16.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: <Widget>[
+                            Column(
                               children: <Widget>[
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    Opacity(
-                                      opacity: 0.4,
-                                      child: Text(
-                                        'Height',
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.black54,
-                                        ),
-                                      ),
+                                Opacity(
+                                  opacity: 0.4,
+                                  child: Text(
+                                    'Height',
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black54,
                                     ),
-                                    Text(
-                                      buildString(_pokeInfo.height.toString()) +
-                                          " cm",
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        color: Colors.black,
-                                      ),
-                                    ),
-                                  ],
+                                  ),
                                 ),
                                 SizedBox(
-                                  height: 5,
+                                  height: 11,
                                 ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    Opacity(
-                                      opacity: 0.4,
-                                      child: Text(
-                                        'Weight',
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.black54,
-                                        ),
-                                      ),
+                                Text(
+                                  _pokeInfo != null
+                                      ? buildString(
+                                              _pokeInfo.height.toString()) +
+                                          " m"
+                                      : "",
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            Column(
+                              children: <Widget>[
+                                Opacity(
+                                  opacity: 0.4,
+                                  child: Text(
+                                    'Weight',
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black54,
                                     ),
-                                    Text(
-                                      buildString(_pokeInfo.weight.toString()) +
-                                          " kg",
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        color: Colors.black,
-                                      ),
-                                    ),
-                                  ],
-                                )
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 11,
+                                ),
+                                Text(
+                                  _pokeInfo != null
+                                      ? buildString(
+                                              _pokeInfo.weight.toString()) +
+                                          " kg"
+                                      : "",
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    color: Colors.black,
+                                  ),
+                                ),
                               ],
                             )
-                          : Center(
-                              child: SizedBox(
-                                width: 15,
-                                height: 15,
-                                child: CircularProgressIndicator(
-                                  valueColor: AlwaysStoppedAnimation<Color>(
-                                      _apiStore.pokemonColor),
-                                ),
-                              ),
-                            );
-                    }),
-                  )
+                          ],
+                        ),
+                      ),
+                    );
+                  })
                 ],
               ),
             ),
