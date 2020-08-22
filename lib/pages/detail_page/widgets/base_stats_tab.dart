@@ -14,22 +14,22 @@ class BaseStatsTab extends StatelessWidget {
       sum = sum + f.baseStat;
       switch (f.stat.name) {
         case 'speed':
-          list[0] = f.baseStat;
+          list[5] = f.baseStat;
           break;
         case 'special-defense':
-          list[1] = f.baseStat;
-          break;
-        case 'special-attack':
-          list[2] = f.baseStat;
-          break;
-        case 'defense':
-          list[3] = f.baseStat;
-          break;
-        case 'attack':
           list[4] = f.baseStat;
           break;
+        case 'special-attack':
+          list[3] = f.baseStat;
+          break;
+        case 'defense':
+          list[2] = f.baseStat;
+          break;
+        case 'attack':
+          list[1] = f.baseStat;
+          break;
         case 'hp':
-          list[5] = f.baseStat;
+          list[0] = f.baseStat;
           break;
       }
     });
@@ -52,7 +52,28 @@ class BaseStatsTab extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      'Velocidade',
+                      'HP',
+                      style: TextStyle(fontSize: 16, color: Colors.grey[600]),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      'Attack',
+                      style: TextStyle(fontSize: 16, color: Colors.grey[600]),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      'Defense',
+                      style: TextStyle(fontSize: 16, color: Colors.grey[600]),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      'Sp. Atk',
                       style: TextStyle(fontSize: 16, color: Colors.grey[600]),
                     ),
                     SizedBox(
@@ -66,28 +87,7 @@ class BaseStatsTab extends StatelessWidget {
                       height: 10,
                     ),
                     Text(
-                      'Sp. Atq',
-                      style: TextStyle(fontSize: 16, color: Colors.grey[600]),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Text(
-                      'Defesa',
-                      style: TextStyle(fontSize: 16, color: Colors.grey[600]),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Text(
-                      'Ataque',
-                      style: TextStyle(fontSize: 16, color: Colors.grey[600]),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Text(
-                      'HP',
+                      'Speed',
                       style: TextStyle(fontSize: 16, color: Colors.grey[600]),
                     ),
                     SizedBox(
@@ -100,7 +100,7 @@ class BaseStatsTab extends StatelessWidget {
                   ],
                 ),
                 SizedBox(
-                  width: 10,
+                  width: 26,
                 ),
                 Observer(builder: (context) {
                   List<int> _list = getStatusPokemon(_subApiStore.pokeInfo);
@@ -109,7 +109,7 @@ class BaseStatsTab extends StatelessWidget {
                       Text(
                         _list[0].toString(),
                         style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.bold),
+                            fontSize: 16, fontWeight: FontWeight.w700),
                       ),
                       SizedBox(
                         height: 10,
@@ -117,7 +117,7 @@ class BaseStatsTab extends StatelessWidget {
                       Text(
                         _list[1].toString(),
                         style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.bold),
+                            fontSize: 16, fontWeight: FontWeight.w700),
                       ),
                       SizedBox(
                         height: 10,
@@ -125,7 +125,7 @@ class BaseStatsTab extends StatelessWidget {
                       Text(
                         _list[2].toString(),
                         style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.bold),
+                            fontSize: 16, fontWeight: FontWeight.w700),
                       ),
                       SizedBox(
                         height: 10,
@@ -133,7 +133,7 @@ class BaseStatsTab extends StatelessWidget {
                       Text(
                         _list[3].toString(),
                         style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.bold),
+                            fontSize: 16, fontWeight: FontWeight.w700),
                       ),
                       SizedBox(
                         height: 10,
@@ -141,7 +141,7 @@ class BaseStatsTab extends StatelessWidget {
                       Text(
                         _list[4].toString(),
                         style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.bold),
+                            fontSize: 16, fontWeight: FontWeight.w700),
                       ),
                       SizedBox(
                         height: 10,
@@ -149,7 +149,7 @@ class BaseStatsTab extends StatelessWidget {
                       Text(
                         _list[5].toString(),
                         style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.bold),
+                            fontSize: 16, fontWeight: FontWeight.w700),
                       ),
                       SizedBox(
                         height: 10,
@@ -157,7 +157,7 @@ class BaseStatsTab extends StatelessWidget {
                       Text(
                         _list[6].toString(),
                         style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.bold),
+                            fontSize: 16, fontWeight: FontWeight.w700),
                       ),
                       SizedBox(
                         height: 10,
