@@ -173,37 +173,37 @@ class BaseStatsTab extends StatelessWidget {
                   return Column(
                     children: <Widget>[
                       StatusBar(
-                        widthFactor: _list[0] / 160,
+                        widthFactor: _list[0] / 100,
                       ),
                       SizedBox(
                         height: 10,
                       ),
                       StatusBar(
-                        widthFactor: _list[1] / 160,
+                        widthFactor: _list[1] / 100,
                       ),
                       SizedBox(
                         height: 10,
                       ),
                       StatusBar(
-                        widthFactor: _list[2] / 160,
+                        widthFactor: _list[2] / 100,
                       ),
                       SizedBox(
                         height: 10,
                       ),
                       StatusBar(
-                        widthFactor: _list[3] / 160,
+                        widthFactor: _list[3] / 100,
                       ),
                       SizedBox(
                         height: 10,
                       ),
                       StatusBar(
-                        widthFactor: _list[4] / 160,
+                        widthFactor: _list[4] / 100,
                       ),
                       SizedBox(
                         height: 10,
                       ),
                       StatusBar(
-                        widthFactor: _list[5] / 160,
+                        widthFactor: _list[5] / 100,
                       ),
                       SizedBox(
                         height: 10,
