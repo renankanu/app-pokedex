@@ -28,6 +28,28 @@ class _InfoPokemonState extends State<InfoPokemon>
     _pageController = PageController(initialPage: 0);
   }
 
+  String buildString(String item) {
+    var initialValue = item;
+    if (initialValue.length == 1) {
+      return "0." + initialValue + "0";
+    }
+    var lastChar = initialValue.substring(initialValue.length - 1);
+    var newvalue = initialValue.substring(0, initialValue.length - 1);
+    return newvalue + "." + lastChar;
+  }
+
+  String converterKgToLbs(String kg) {
+    var kgDouble = num.tryParse(buildString(kg))?.toDouble();
+    var lbs = kgDouble * 2.2046;
+    return lbs.toStringAsFixed(1) + " lbs (" + kgDouble.toString() + " kg)";
+  }
+
+  String converterMtsToFeet(String meters) {
+    var mtsDouble = num.tryParse(buildString(meters))?.toDouble();
+    var feet = mtsDouble * 3.2808;
+    return feet.toStringAsFixed(1) + " (" + mtsDouble.toString() + " mts)";
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -156,9 +178,8 @@ class _InfoPokemonState extends State<InfoPokemon>
                                 ),
                                 Text(
                                   _pokeInfo != null
-                                      ? buildString(
-                                              _pokeInfo.height.toString()) +
-                                          " m"
+                                      ? converterMtsToFeet(
+                                          _pokeInfo.height.toString())
                                       : "",
                                   style: TextStyle(
                                     fontSize: 14,
@@ -188,9 +209,8 @@ class _InfoPokemonState extends State<InfoPokemon>
                                 ),
                                 Text(
                                   _pokeInfo != null
-                                      ? buildString(
-                                              _pokeInfo.weight.toString()) +
-                                          " kg"
+                                      ? converterKgToLbs(
+                                          _pokeInfo.weight.toString())
                                       : "",
                                   style: TextStyle(
                                     fontSize: 14,
@@ -217,15 +237,5 @@ class _InfoPokemonState extends State<InfoPokemon>
         ],
       ),
     );
-  }
-
-  String buildString(String item) {
-    var initialValue = item;
-    if (initialValue.length == 1) {
-      return "0." + initialValue;
-    }
-    var lastChar = initialValue.substring(initialValue.length - 1);
-    var newvalue = initialValue.substring(0, initialValue.length - 1);
-    return newvalue + "." + lastChar;
   }
 }
