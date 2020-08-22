@@ -1,3 +1,4 @@
+[![Codemagic build status](https://api.codemagic.io/apps/5f419b9fd69c21215a92572e/5f419b9fd69c21215a92572d/status_badge.svg)](https://codemagic.io/apps/5f419b9fd69c21215a92572e/5f419b9fd69c21215a92572d/latest_build)
 # App Pokedex
 
 Project made for studies in the flutter and MobX.
