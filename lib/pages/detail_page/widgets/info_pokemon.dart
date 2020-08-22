@@ -50,6 +50,8 @@ class _InfoPokemonState extends State<InfoPokemon>
     return feet.toStringAsFixed(1) + " (" + mtsDouble.toString() + " mts)";
   }
 
+  String capitalize(String text) => text[0].toUpperCase() + text.substring(1);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -105,7 +107,10 @@ class _InfoPokemonState extends State<InfoPokemon>
                 children: <Widget>[
                   Text(
                     'Description',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                   SizedBox(
                     height: 10,
@@ -218,10 +223,78 @@ class _InfoPokemonState extends State<InfoPokemon>
                                   ),
                                 ),
                               ],
-                            )
+                            ),
                           ],
                         ),
                       ),
+                    );
+                  }),
+                  SizedBox(
+                    height: 31,
+                  ),
+                  Text(
+                    "Other",
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 22,
+                  ),
+                  Observer(builder: (context) {
+                    Specie _specie = _subApiStore.specie;
+                    return Row(
+                      children: <Widget>[
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 18.0),
+                              child: Text(
+                                "Shape",
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 18.0),
+                              child: Text("Egg Groups"),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 18.0),
+                              child: Text("Egg Cycle"),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          width: 26,
+                        ),
+                        Column(
+                          children: <Widget>[
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 18.0),
+                              child: Text(
+                                _specie != null
+                                    ? capitalize(_specie.shape.name)
+                                    : "",
+                                style: TextStyle(fontWeight: FontWeight.w500),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 18.0),
+                              child: Text(
+                                _specie != null
+                                    ? capitalize(_specie.eggGroups[0].name)
+                                    : "",
+                                style: TextStyle(fontWeight: FontWeight.w500),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 18.0),
+                              child: Text("Gender"),
+                            ),
+                          ],
+                        )
+                      ],
                     );
                   })
                 ],
