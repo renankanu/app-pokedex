@@ -103,6 +103,9 @@ class BaseStatsTab extends StatelessWidget {
                   width: 26,
                 ),
                 Observer(builder: (context) {
+                  if (_subApiStore.pokeInfo == null) {
+                    return Container();
+                  }
                   List<int> _list = getStatusPokemon(_subApiStore.pokeInfo);
                   return Column(
                     children: <Widget>[
@@ -169,6 +172,9 @@ class BaseStatsTab extends StatelessWidget {
                   width: 10,
                 ),
                 Observer(builder: (context) {
+                  if (_subApiStore.pokeInfo == null) {
+                    return Container();
+                  }
                   List<int> _list = getStatusPokemon(_subApiStore.pokeInfo);
                   return Column(
                     children: <Widget>[

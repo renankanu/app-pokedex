@@ -6,6 +6,7 @@ import 'package:app_pokedex/stores/api_store.dart';
 import 'package:app_pokedex/stores/sub_api_store.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:simple_animations/simple_animations.dart';
@@ -94,183 +95,193 @@ class _DetailState extends State<Detail> {
   @override
   Widget build(BuildContext context) {
     final double _statusBarHeight = MediaQuery.of(context).padding.top;
-    return Scaffold(
-      body: Stack(
-        children: <Widget>[
-          Observer(builder: (context) {
-            return AnimatedContainer(
-              color: _apiStore.pokemonColor,
-              duration: Duration(milliseconds: 900),
-            );
-          }),
-          Positioned(top: 10, right: 60, child: Image.asset(ConstsApp.dots)),
-          Positioned(top: -50, left: -10, child: RetangleDetail()),
-          Container(
-            padding: EdgeInsets.only(top: _statusBarHeight),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                IconButton(
-                  icon: Icon(
-                    Icons.arrow_back,
-                    color: Colors.white,
-                  ),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                ),
-                Opacity(
-                    opacity: _opacityTitle,
-                    child: Text(
-                      _apiStore.pokemonActual.name,
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                          fontSize: 22),
-                    )),
-                IconButton(
-                  icon: Icon(
-                    Icons.favorite_border,
-                    color: Colors.white,
-                  ),
-                  onPressed: () {},
-                ),
-              ],
-            ),
-          ),
-          Padding(
-              padding: const EdgeInsets.only(top: 80),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Container(
-                  child: Observer(builder: (context) {
-                    return Opacity(
-                      opacity: _opacity,
-                      child: Column(
-                        children: <Widget>[
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              Text(
-                                _apiStore.pokemonActual.name,
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 36,
-                                  color: Colors.white,
-                                ),
-                              ),
-                              Text(
-                                "#" + _apiStore.pokemonActual.num,
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18,
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ],
-                          ),
-                          Container(
-                            child: getTypes(_apiStore.pokemonActual.type),
-                          )
-                        ],
-                      ),
-                    );
-                  }),
-                ),
-              )),
-          SlidingSheet(
-              listener: (state) => {
-                    setState(() {
-                      _progress = state.progress;
-                      _multiple = 1 - interval(0.0, 0.9, _progress);
-                      _opacity = _multiple;
-                      _opacityTitle =
-                          _multiple = interval(0.55, 0.9, _progress);
-                    })
-                  },
-              elevation: 0,
-              cornerRadius: 30,
-              snapSpec: SnapSpec(
-                snap: true,
-                snappings: [0.7, 0.9],
-                positioning: SnapPositioning.relativeToAvailableSpace,
-              ),
-              builder: (context, state) {
-                return Container(
-                  height: MediaQuery.of(context).size.height,
-                  child: InfoPokemon(),
-                );
-              }),
-          Positioned(
-            top: 120 - (_progress * 100),
-            left: 0,
-            right: 0,
-            child: Opacity(
-              opacity: _opacity,
-              child: Container(
-                height: 200,
-                child: PageView.builder(
-                    controller: _pageController,
-                    onPageChanged: (index) {
-                      _apiStore.setSelectedPokemon(index: index);
-                      _subApiStore.getInfoPokemon(_apiStore.pokemonActual.name);
-                      _subApiStore
-                          .getInfoSpecie(_apiStore.pokemonActual.id.toString());
+    return AnnotatedRegion(
+      value: const SystemUiOverlayStyle(
+        statusBarIconBrightness: Brightness.light,
+        statusBarBrightness: Brightness.dark,
+      ),
+      child: Scaffold(
+        body: Stack(
+          children: <Widget>[
+            Observer(builder: (context) {
+              return AnimatedContainer(
+                color: _apiStore.pokemonColor,
+                duration: Duration(milliseconds: 900),
+              );
+            }),
+            Positioned(top: 10, right: 60, child: Image.asset(ConstsApp.dots)),
+            Positioned(top: -50, left: -10, child: RetangleDetail()),
+            Container(
+              padding: EdgeInsets.only(top: _statusBarHeight),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  IconButton(
+                    icon: Icon(
+                      Icons.arrow_back,
+                      color: Colors.white,
+                    ),
+                    onPressed: () {
+                      Navigator.pop(context);
                     },
-                    itemCount: _apiStore.pokeAPI.pokemon.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      Pokemon _pokeItem = _apiStore.getPokemon(index: index);
-                      return Stack(
-                        alignment: Alignment.center,
-                        children: <Widget>[
-                          LoopAnimation(
-                              tween: _animation,
-                              duration: Duration(seconds: 10),
-                              builder: (context, child, value) {
-                                return Transform.rotate(
-                                  angle: value.get(_CheckboxProps.rotation),
-                                  child: Opacity(
-                                    child: Image.asset(
-                                      ConstsApp.whitePokeball,
-                                      width: 280,
-                                      height: 280,
+                  ),
+                  Opacity(
+                      opacity: _opacityTitle,
+                      child: Text(
+                        _apiStore.pokemonActual.name,
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                            fontSize: 22),
+                      )),
+                  IconButton(
+                    icon: Icon(
+                      Icons.favorite_border,
+                      color: Colors.white,
+                    ),
+                    onPressed: () {},
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+                padding: const EdgeInsets.only(top: 80),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Container(
+                    child: Observer(builder: (context) {
+                      return Opacity(
+                        opacity: _opacity,
+                        child: Column(
+                          children: <Widget>[
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                Expanded(
+                                  child: Text(
+                                    _apiStore.pokemonActual.name,
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 36,
+                                      color: Colors.white,
                                     ),
-                                    opacity: index == _apiStore.actualPosition
-                                        ? 0.2
-                                        : 0.0,
                                   ),
-                                );
-                              }),
-                          Observer(builder: (context) {
-                            return AnimatedPadding(
-                              duration: Duration(milliseconds: 500),
-                              curve: Curves.bounceInOut,
-                              padding: EdgeInsets.all(
-                                  index == _apiStore.actualPosition ? 0 : 60),
-                              child: Hero(
-                                tag: _pokeItem.name,
-                                child: CachedNetworkImage(
-                                  width: 160,
-                                  height: 160,
-                                  color: index == _apiStore.actualPosition
-                                      ? null
-                                      : Colors.black.withOpacity(0.2),
-                                  placeholder: (context, url) => new Container(
-                                    color: Colors.transparent,
-                                  ),
-                                  imageUrl:
-                                      'https://raw.githubusercontent.com/fanzeyi/pokemon.json/master/images/${_pokeItem.num}.png',
                                 ),
-                              ),
-                            );
-                          })
-                        ],
+                                Text(
+                                  "#" + _apiStore.pokemonActual.num,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 18,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Container(
+                              child: getTypes(_apiStore.pokemonActual.type),
+                            )
+                          ],
+                        ),
                       );
                     }),
+                  ),
+                )),
+            SlidingSheet(
+                listener: (state) => {
+                      setState(() {
+                        _progress = state.progress;
+                        _multiple = 1 - interval(0.0, 0.9, _progress);
+                        _opacity = _multiple;
+                        _opacityTitle =
+                            _multiple = interval(0.55, 0.9, _progress);
+                      })
+                    },
+                elevation: 0,
+                cornerRadius: 30,
+                snapSpec: SnapSpec(
+                  snap: true,
+                  snappings: [0.7, 0.9],
+                  positioning: SnapPositioning.relativeToAvailableSpace,
+                ),
+                builder: (context, state) {
+                  return Container(
+                    height: MediaQuery.of(context).size.height,
+                    child: InfoPokemon(),
+                  );
+                }),
+            Positioned(
+              top: 120 - (_progress * 100),
+              left: 0,
+              right: 0,
+              child: Opacity(
+                opacity: _opacity,
+                child: Container(
+                  height: 200,
+                  child: PageView.builder(
+                      controller: _pageController,
+                      onPageChanged: (index) {
+                        _apiStore.setSelectedPokemon(index: index);
+                        _subApiStore
+                            .getInfoPokemon(_apiStore.pokemonActual.name);
+                        _subApiStore.getInfoSpecie(
+                            _apiStore.pokemonActual.id.toString());
+                      },
+                      itemCount: _apiStore.pokeAPI.pokemon.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        Pokemon _pokeItem = _apiStore.getPokemon(index: index);
+                        return Stack(
+                          alignment: Alignment.center,
+                          children: <Widget>[
+                            LoopAnimation(
+                                tween: _animation,
+                                duration: Duration(seconds: 10),
+                                builder: (context, child, value) {
+                                  return Transform.rotate(
+                                    angle: value.get(_CheckboxProps.rotation),
+                                    child: Opacity(
+                                      child: Image.asset(
+                                        ConstsApp.whitePokeball,
+                                        width: 280,
+                                        height: 280,
+                                      ),
+                                      opacity: index == _apiStore.actualPosition
+                                          ? 0.2
+                                          : 0.0,
+                                    ),
+                                  );
+                                }),
+                            Observer(builder: (context) {
+                              return AnimatedPadding(
+                                duration: Duration(milliseconds: 500),
+                                curve: Curves.bounceInOut,
+                                padding: EdgeInsets.all(
+                                    index == _apiStore.actualPosition ? 0 : 60),
+                                child: Hero(
+                                  tag: _pokeItem.name,
+                                  child: CachedNetworkImage(
+                                    width: 160,
+                                    height: 160,
+                                    color: index == _apiStore.actualPosition
+                                        ? null
+                                        : Colors.black.withOpacity(0.2),
+                                    placeholder: (context, url) =>
+                                        new Container(
+                                      color: Colors.transparent,
+                                    ),
+                                    imageUrl:
+                                        'https://raw.githubusercontent.com/fanzeyi/pokemon.json/master/images/${_pokeItem.num}.png',
+                                  ),
+                                ),
+                              );
+                            })
+                          ],
+                        );
+                      }),
+                ),
               ),
-            ),
-          )
-        ],
+            )
+          ],
+        ),
       ),
     );
   }
