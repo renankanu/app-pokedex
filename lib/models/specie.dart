@@ -89,6 +89,9 @@ class Specie {
     growthRate = json['growth_rate'] != null
         ? new ObjPokemon.fromJson(json['growth_rate'])
         : null;
+    habitat = json['habitat'] != null
+        ? new ObjPokemon.fromJson(json['habitat'])
+        : null;
     hasGenderDifferences = json['has_gender_differences'];
     hatchCounter = json['hatch_counter'];
     id = json['id'];
